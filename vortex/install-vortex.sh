@@ -19,3 +19,4 @@ ln -sf ~/.pikdum/steam-deck-master/vortex/pikdum-vortex.desktop ~/.local/share/a
 update-desktop-database || true
 
 rm -f ~/Desktop/install-vortex.desktop
+ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim-post-deploy.desktop ~/Desktop/
