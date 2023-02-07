@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euxo pipefail
 
 mkdir -p ~/.pikdum/install-vortex-tmp
 trap 'rm -rf ~/.pikdum/install-vortex-tmp' EXIT
