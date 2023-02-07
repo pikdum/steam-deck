@@ -17,3 +17,5 @@ cd ~/stl/prefix/
 
 ln -s ~/.pikdum/steam-deck-master/vortex/pikdum-vortex.desktop ~/.local/share/applications/
 update-desktop-database
+
+rm -f ~/Desktop/install-vortex.desktop
