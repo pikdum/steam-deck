@@ -12,3 +12,6 @@ fi
 
 echo "Copying loadorder.txt and plugins.txt"
 cp "$HOME/.config/steamtinkerlaunch/vortex/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition"/* "$HOME/.local/share/Steam/steamapps/compatdata/489830/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition/"
+
+echo "Success! Exiting in 3..."
+sleep 3

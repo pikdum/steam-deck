@@ -20,3 +20,6 @@ update-desktop-database || true
 
 rm -f ~/Desktop/install-vortex.desktop
 ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim-post-deploy.desktop ~/Desktop/
+
+echo "Success! Exiting in 3..."
+sleep 3
