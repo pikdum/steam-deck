@@ -6,5 +6,5 @@ MimeType=x-scheme-handler/nxm;x-scheme-handler/nxm-protocol
 Terminal=false
 X-KeepTerminal=false
 Path=/home/deck/.config/steamtinkerlaunch/vortex/compatdata/pfx/drive_c/Program Files/Black Tree Gaming Ltd/Vortex
-Exec=/home/deck/.pikdum/vortex/launch-vortex.sh %u
-Icon=/home/deck/.pikdum/vortex/vortex.ico
+Exec=/home/deck/.pikdum/steam-deck-master/vortex/launch-vortex.sh %u
+Icon=/home/deck/.pikdum/steam-deck-master/vortex/vortex.ico
