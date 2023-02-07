@@ -18,4 +18,4 @@ this will:
 2. use steamtinkerlaunch to set up vortex
 3. add Vortex as an application and allow it to open nexus urls
 4. add a 'Skyrim Post-Deploy' shortcut to desktop
-  a. needs to be run every time after you change mods in Vortex
+  * needs to be run every time after you change mods in Vortex
