@@ -16,6 +16,6 @@ cd ~/stl/prefix/
 ./steamtinkerlaunch vortex install
 
 ln -sf ~/.pikdum/steam-deck-master/vortex/pikdum-vortex.desktop ~/.local/share/applications/
-update-desktop-database
+update-desktop-database || true
 
 rm -f ~/Desktop/install-vortex.desktop
