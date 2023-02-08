@@ -22,5 +22,7 @@ rm -f ~/Desktop/install-vortex.desktop
 ln -sf ~/.pikdum/steam-deck-master/vortex/pikdum-vortex.desktop ~/Desktop/
 ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim-post-deploy.desktop ~/Desktop/
 
+mkdir -p /run/media/mmcblk0p1/vortex-downloads || true
+
 echo "Success! Exiting in 3..."
 sleep 3
