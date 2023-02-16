@@ -19,3 +19,5 @@ this will:
 3. add Vortex as an application and allow it to open nexus urls
 4. add a 'Skyrim Post-Deploy' shortcut to desktop
    * needs to be run every time after you change mods in Vortex
+
+after modding, try and run games normally through game mode rather than launching through vortex
