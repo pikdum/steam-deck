@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+mkdir -p ~/.local/share/applications/
+
 mkdir -p ~/.pikdum
 cd ~/.pikdum
 wget -O steam-deck.zip https://github.com/pikdum/steam-deck/archive/refs/heads/master.zip
