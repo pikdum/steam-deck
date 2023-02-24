@@ -5,7 +5,9 @@ SKYRIM_INTERNAL="$HOME/.steam/steam/steamapps/common/Skyrim Special Edition/"
 SKYRIM_EXTERNAL="/run/media/mmcblk0p1/steamapps/common/Skyrim Special Edition/"
 
 skse_setup() {
-    if [ -d "$1" ]; then
+    if [ -d "$1" ] && \
+        [ -f "${1}skse64_loader.exe" ] && \
+        [ -f "${1}SkyrimSELauncher.exe" ]; then
         cd "$1"
         if ! cmp --silent -- "skse64_loader.exe" "SkyrimSELauncher.exe"; then
             echo "Swapping SkyrimSELauncher.exe for skse64_loader.exe"
