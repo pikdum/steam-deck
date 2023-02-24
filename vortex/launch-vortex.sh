@@ -3,4 +3,4 @@ if [ -z "$1" ]; then
     exec "$HOME/stl/prefix/steamtinkerlaunch" vortex start
 fi
 
-exec "$HOME/deck/stl/prefix/steamtinkerlaunch" vortex url "$1"
+exec "$HOME/stl/prefix/steamtinkerlaunch" vortex url "$1"
