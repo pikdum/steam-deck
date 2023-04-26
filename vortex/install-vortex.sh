@@ -13,7 +13,7 @@ cd steamtinkerlaunch-12.0
 ./steamtinkerlaunch
 
 cd ~/stl/prefix/
-sed -i '13956s/".*/vortex-setup-1.7.8.exe/' steamtinkerlaunch
+sed -i 's/VORTEXSETUP=".*/VORTEXSETUP=vortex-setup-1.7.8.exe/' steamtinkerlaunch
 ./steamtinkerlaunch vortex install
 
 mkdir -p ~/.local/share/applications/
