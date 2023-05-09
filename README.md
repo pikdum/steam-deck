@@ -1,5 +1,9 @@
 # pikdum's steam deck tools
 
+> **Notice:** Vortex 1.8 is currently broken.  
+> This will install Vortex 1.7.8, so make sure to turn off auto-updates afterwards if possible.  
+> If already upgraded to 1.8 and it's broken, probably need to uninstall.
+
 ## what is this
 
 a collection of steam deck tools and scripts to help automate some things, starting with installing vortex
@@ -21,3 +25,14 @@ this will:
    * needs to be run every time after you change mods in Vortex
 
 after modding, try and run games normally through game mode rather than launching through vortex
+
+## uninstall
+
+```bash
+# remove steamtinkerlaunch
+rm -rf ~/stl/
+rm -rf ~/.config/steamtinkerlaunch/
+# remove these tools
+rm -rf ~/.pikdum/
+rm -rf ~/.local/share/applications/pikdum-vortex.desktop
+```
