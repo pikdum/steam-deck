@@ -5,8 +5,8 @@ SKYRIM_INTERNAL="$HOME/.steam/steam/steamapps/common/Skyrim Special Edition/"
 SKYRIM_EXTERNAL="/run/media/mmcblk0p1/steamapps/common/Skyrim Special Edition/"
 
 skse_setup() {
-    if [ -d "$1" ] && \
-        [ -f "${1}skse64_loader.exe" ] && \
+    if [ -d "$1" ] &&
+        [ -f "${1}skse64_loader.exe" ] &&
         [ -f "${1}SkyrimSELauncher.exe" ]; then
         cd "$1"
         if ! cmp --silent -- "skse64_loader.exe" "SkyrimSELauncher.exe"; then
@@ -20,7 +20,7 @@ skse_setup() {
 skse_setup "$SKYRIM_INTERNAL"
 skse_setup "$SKYRIM_EXTERNAL"
 
-APPDATA_VORTEX="$HOME/.config/steamtinkerlaunch/vortex/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition"
+APPDATA_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition"
 APPDATA_INTERNAL="$HOME/.local/share/Steam/steamapps/compatdata/489830/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition/"
 APPDATA_EXTERNAL="/run/media/mmcblk0p1/steamapps/compatdata/489830/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition/"
 

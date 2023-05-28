@@ -1,5 +1,9 @@
 # pikdum's steam deck tools
 
+> **Notice:** Recently swapped Vortex install method from STL to [pikdum/vortex-linux](https://github.com/pikdum/vortex-linux).  
+> This is a breaking change, so you'll need to uninstall + reinstall.  
+> It's also completely new, so there might be bugs.  
+
 ## what is this
 
 a collection of steam deck tools and scripts to help automate some things, starting with installing vortex
@@ -14,15 +18,30 @@ a collection of steam deck tools and scripts to help automate some things, start
 after installing, you should have a shortcut on the desktop to install vortex
 
 this will:
-1. install steamtinkerlaunch
-2. use steamtinkerlaunch to set up vortex
-3. add Vortex as an application and allow it to open nexus urls
-4. add a 'Skyrim Post-Deploy' shortcut to desktop
-   * needs to be run every time after you change mods in Vortex
 
-after modding, try and run games normally through game mode rather than launching through vortex
+0. install SteamLinuxRuntime Sniper
+1. install pikdum/vortex-linux
+2. use ./vortex-linux to set up vortex
+3. add a 'Skyrim Post-Deploy' shortcut to desktop
+   * needs to be run every time after you change mods in Vortex
+   * also adds a 'Fallout 4 Post-Deploy'
+4. map J: to internal games and K: to sd card games
+   * E: is the sd card
+
+after modding, run games normally through game mode rather than launching through vortex
 
 ## uninstall
+
+```bash
+# remove these tools
+rm -rf ~/.pikdum/
+# remove vortex
+rm -rf ~/.vortex-linux/
+rm -rf ~/.local/share/applications/vortex.*
+# manually remove desktop icons
+```
+
+## old version uninstall
 
 ```bash
 # remove steamtinkerlaunch
@@ -33,8 +52,3 @@ rm -rf ~/.pikdum/
 rm -rf ~/.local/share/applications/pikdum-vortex.desktop
 ```
 
-## notes
-
-* if vortex won't launch after installing, try restarting your steam deck
-* vortex 1.8 should work now, but might need a full reinstall if your setup is currently broken
-* vortex 1.8 will probably ask you to install .NET after starting
