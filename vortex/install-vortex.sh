@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+# install steam linux runtime sniper
+steam steam://install/1628350
+
 mkdir -p ~/.pikdum/install-vortex-tmp
 trap 'rm -rf ~/.pikdum/install-vortex-tmp' EXIT
 
@@ -13,9 +16,6 @@ cd steamtinkerlaunch-12.0
 ./steamtinkerlaunch
 
 cd ~/stl/prefix/
-./steamtinkerlaunch dcp https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton7-55/GE-Proton7-55.tar.gz
-sed -i 's/VORTEXSETUP=".*/VORTEXSETUP=vortex-setup-1.7.8.exe/' steamtinkerlaunch
-sed -i 's/USEVORTEXPROTON.*/USEVORTEXPROTON="GE-Proton7-55"/' ~/.config/steamtinkerlaunch/global.conf
 ./steamtinkerlaunch vortex install
 
 mkdir -p ~/.local/share/applications/

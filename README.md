@@ -1,9 +1,5 @@
 # pikdum's steam deck tools
 
-> **Notice:** Vortex 1.8 is currently broken.  
-> This will install Vortex 1.7.8, so make sure to turn off auto-updates afterwards if possible.  
-> If already upgraded to 1.8 and it's broken, probably need to uninstall.
-
 ## what is this
 
 a collection of steam deck tools and scripts to help automate some things, starting with installing vortex
@@ -36,3 +32,9 @@ rm -rf ~/.config/steamtinkerlaunch/
 rm -rf ~/.pikdum/
 rm -rf ~/.local/share/applications/pikdum-vortex.desktop
 ```
+
+## notes
+
+* if vortex won't launch after installing, try restarting your steam deck
+* vortex 1.8 should work now, but might need a full reinstall if your setup is currently broken
+* vortex 1.8 will probably ask you to install .NET after starting
