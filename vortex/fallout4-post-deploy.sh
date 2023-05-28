@@ -12,7 +12,7 @@ f4se_setup() {
         if ! cmp --silent -- "f4se_loader.exe" "Fallout4Launcher.exe"; then
             echo "Swapping Fallout4Launcher.exe for f4se_loader.exe"
             mv Fallout4Launcher.exe _Fallout4Launcher.exe
-            cp f4seloader.exe Fallout4Launcher.exe
+            cp f4se_loader.exe Fallout4Launcher.exe
         fi
     fi
 }
@@ -25,6 +25,8 @@ APPDATA_INTERNAL="$HOME/.local/share/Steam/steamapps/compatdata/377160/pfx/drive
 APPDATA_EXTERNAL="/run/media/mmcblk0p1/steamapps/compatdata/377160/pfx/drive_c/users/steamuser/AppData/Local/Fallout4/"
 
 echo "Copying loadorder.txt and plugins.txt"
+mkdir -p "$APPDATA_INTERNAL" || true
+mkdir -p "$APPDATA_EXTERNAL" || true
 cp "$APPDATA_VORTEX"/* "$APPDATA_INTERNAL" || true
 cp "$APPDATA_VORTEX"/* "$APPDATA_EXTERNAL" || true
 

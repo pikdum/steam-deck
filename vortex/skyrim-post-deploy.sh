@@ -25,6 +25,8 @@ APPDATA_INTERNAL="$HOME/.local/share/Steam/steamapps/compatdata/489830/pfx/drive
 APPDATA_EXTERNAL="/run/media/mmcblk0p1/steamapps/compatdata/489830/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition/"
 
 echo "Copying loadorder.txt and plugins.txt"
+mkdir -p "$APPDATA_INTERNAL" || true
+mkdir -p "$APPDATA_EXTERNAL" || true
 cp "$APPDATA_VORTEX"/* "$APPDATA_INTERNAL" || true
 cp "$APPDATA_VORTEX"/* "$APPDATA_EXTERNAL" || true
 
