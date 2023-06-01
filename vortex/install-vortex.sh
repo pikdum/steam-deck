@@ -19,7 +19,18 @@ rm -rf vortex-linux || true
 wget https://github.com/pikdum/vortex-linux/releases/download/$VORTEX_LINUX/vortex-linux
 chmod +x vortex-linux
 
-./vortex-linux setConfig STEAM_RUNTIME_PATH $HOME/.steam/steam/steamapps/common/SteamLinuxRuntime_sniper
+# set STEAM_RUNTIME_PATH to internal storage or sd card
+if [ -f "$HOME/.steam/steam/steamapps/common/SteamLinuxRuntime_sniper/run" ]; then
+    STEAM_RUNTIME_PATH="$HOME/.steam/steam/steamapps/common/SteamLinuxRuntime_sniper"
+elif [ -f "/run/media/mmcblk0p1/steamapps/common/SteamLinuxRuntime_sniper/run" ]; then
+    STEAM_RUNTIME_PATH="/run/media/mmcblk0p1/steamapps/common/SteamLinuxRuntime_sniper"
+else
+    echo "SteamLinuxRuntime Sniper not found!"
+    sleep 3
+    exit 1
+fi
+
+./vortex-linux setConfig STEAM_RUNTIME_PATH $STEAM_RUNTIME_PATH
 ./vortex-linux downloadProton "$PROTON_URL"
 ./vortex-linux setProton "$PROTON_BUILD"
 ./vortex-linux downloadVortex "$VORTEX_URL"
