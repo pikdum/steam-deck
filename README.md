@@ -26,9 +26,34 @@ this will:
    * needs to be run every time after you change mods in Vortex
    * also adds a 'Fallout 4 Post-Deploy'
 4. map J: to internal games and K: to sd card games
-   * E: is the sd card
+   * E: is the sd card root
 
 after modding, run games normally through game mode rather than launching through vortex
+
+### adding a game
+
+* will need to manually set the location, use either the J: or K: drives
+  * J: is internal storage games, K: is sd card games
+* vortex will pop up some warnings about: staging location, deployment method
+   * walk through their fixes
+   * staging folder needs to be on the same drive as the game
+     * suggested path works here
+   * deployment method should be hardlinks
+
+### download with vortex button link handler
+
+> **Notice:** Heard some people mention that this requires Nexus Premium.  
+> Could use some more people either confirming or denying this.  
+
+* might work out of the box, unless you've installed vortex before
+* if it doesn't work, edit these lines in `~/.local/share/applications/mimeapps.list`
+```
+x-scheme-handler/nxm=vortex.desktop
+x-scheme-handler/nxm-protocol=vortex.desktop
+```
+* run `update-mime-database ~/.local/share/mime/`
+* might need to reboot
+* if still issues, make sure your browser is using the default app
 
 ## uninstall
 
