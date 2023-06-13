@@ -55,6 +55,29 @@ x-scheme-handler/nxm-protocol=vortex.desktop
 * might need to reboot
 * if still issues, make sure your browser is using the default app
 
+### what are these post-deploy shortcuts?
+
+these are for games that need a bit extra to get things working after modding in Vortex
+
+they automate things like:
+
+* copying required files from Vortex's Documents folder to the game's Documents folder
+  * plugins.txt, loadorder.txt, etc.
+* setting up script extenders to launch through Steam
+
+a game's post-deploy script should be ran every time after modding in vortex
+
+> **Note:** If you know what you're doing, could set up symlinks instead for this.  
+> That way it only needs to be set up once, before starting modding.  
+> Might evaluate refactoring to that approach in a v2.
+
+### how to open launcher to change settings afterwards
+
+using Skyrim as an example:
+
+* after running post-deploy, the game will now start SKSE instead of the launcher
+* to open the launcher, install protontricks and launch the underscore-prefixed launcher .exe with it
+
 ## uninstall
 
 ```bash
