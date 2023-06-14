@@ -52,10 +52,11 @@ update-desktop-database || true
 
 rm -f ~/Desktop/install-vortex.desktop
 ln -sf ~/.local/share/applications/vortex.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim(SE)-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim(LE)-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/skyrimle-post-deploy.desktop ~/Desktop/
 ln -sf ~/.pikdum/steam-deck-master/vortex/fallout4-post-deploy.desktop ~/Desktop/
 ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-pre-deploy.desktop ~/Desktop/
 ln -sf ~/.pikdum/steam-deck-master/vortex/fallout3-post-deploy.desktop ~/Desktop/
 ln -sf ~/.pikdum/steam-deck-master/vortex/oblivion-post-deploy.desktop ~/Desktop/
 
