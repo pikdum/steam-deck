@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Skyrim LE Post-Deploy
+Exec=/home/deck/.pikdum/steam-deck-master/vortex/skyrimle-post-deploy.sh
+Icon=steam_icon_2028782
+Terminal=true
+Type=Application
+StartupNotify=false
