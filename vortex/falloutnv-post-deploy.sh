@@ -6,8 +6,8 @@ FALLOUTNV_EXTERNAL="/run/media/mmcblk0p1/steamapps/common/Fallout New Vegas/"
 
 nvse_setup() {
     if [ -d "$1" ] &&
-        [ -f "${1}f4se_loader.exe" ] &&
-        [ -f "${1}Fallout4Launcher.exe" ]; then
+        [ -f "${1}nvse_loader.exe" ] &&
+        [ -f "${1}FalloutNVLauncher.exe" ]; then
         cd "$1"
         if ! cmp --silent -- "nvse_loader.exe" "FalloutNVLauncher.exe"; then
             echo "Swapping FalloutNVLauncher.exe for nvse_loader.exe"
