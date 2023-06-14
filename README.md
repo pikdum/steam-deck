@@ -46,7 +46,7 @@ after modding, run games normally through game mode rather than launching throug
 > Could use some more people either confirming or denying this.  
 
 * might work out of the box, unless you've installed vortex before
-* if it doesn't work, edit these lines in `~/.local/share/applications/mimeapps.list`
+* if it doesn't work, edit these lines in ~~`~/.local/share/applications/mimeapps.list`~~ `~/.config/mimeapps.list`
 ```
 x-scheme-handler/nxm=vortex.desktop
 x-scheme-handler/nxm-protocol=vortex.desktop
