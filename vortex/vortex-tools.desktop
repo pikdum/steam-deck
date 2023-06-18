@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Update Vortex Game Library
+Exec=/home/deck/.pikdum/steam-deck-master/vortex/vortex-tools.sh
+Icon=/home/deck/.pikdum/steam-deck-master/vortex/vortex-tools.ico
+Terminal=true
+Type=Application
+StartupNotify=false

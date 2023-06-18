@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Swap to Vanilla Launcher
+Exec=/home/deck/.pikdum/steam-deck-master/vortex/swap-to-vanilla-launcher.sh
+Icon=/home/deck/.pikdum/steam-deck-master/vortex/swap-to-vanilla-launcher.ico
+Terminal=true
+Type=Application
+StartupNotify=false

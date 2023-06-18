@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-set -euxo pipefail
-
 VORTEX_LINUX="v1.2.1"
 PROTON_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton8-3/GE-Proton8-3.tar.gz"
 VORTEX_URL="https://github.com/Nexus-Mods/Vortex/releases/download/v1.8.3/vortex-setup-1.8.3.exe"
@@ -8,6 +6,7 @@ DOTNET_URL="https://download.visualstudio.microsoft.com/download/pr/85473c45-8d9
 PROTON_BUILD="GE-Proton8-3"
 VORTEX_INSTALLER="vortex-setup-1.8.3.exe"
 
+printf "%s\n" "INFO: Attempting to install Vortex-Linux version: $VORTEX_LINUX";
 # install steam linux runtime sniper
 steam steam://install/1628350
 
@@ -25,7 +24,7 @@ if [ -f "$HOME/.steam/steam/steamapps/common/SteamLinuxRuntime_sniper/run" ]; th
 elif [ -f "/run/media/mmcblk0p1/steamapps/common/SteamLinuxRuntime_sniper/run" ]; then
     STEAM_RUNTIME_PATH="/run/media/mmcblk0p1/steamapps/common/SteamLinuxRuntime_sniper"
 else
-    echo "SteamLinuxRuntime Sniper not found!"
+    printf "%s\n" "INFO: SteamLinuxRuntime Sniper not found!";
     sleep 3
     exit 1
 fi
@@ -52,15 +51,9 @@ update-desktop-database || true
 
 rm -f ~/Desktop/install-vortex.desktop
 ln -sf ~/.local/share/applications/vortex.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/skyrimle-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/fallout4-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-pre-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/fallout3-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/oblivion-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/vortex-tools.desktop ~/Desktop/
 
 mkdir -p /run/media/mmcblk0p1/vortex-downloads || true
 
-echo "Success! Exiting in 3..."
+printf "%s\n" "SUCCESS: Closing in 3..."
 sleep 3
