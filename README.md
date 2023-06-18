@@ -1,5 +1,3 @@
-[![release-please](https://github.com/SirStig/Steam-deck-tests/actions/workflows/release-please.yaml/badge.svg)](https://github.com/SirStig/Steam-deck-tests/actions/workflows/release-please.yaml)
-
 # Pikdum's Steam Deck Tools
 
 > **Notice:** Recently swapped Vortex install method from STL to [pikdum/vortex-linux](https://github.com/pikdum/vortex-linux).  
