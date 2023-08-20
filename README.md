@@ -1,6 +1,6 @@
 # pikdum's steam deck tools
 
-> **Notice:** Looks to be broken after upgrading due to a recent Vortex release.
+> **Notice:** Looks to be broken after upgrading due to a recent Vortex release.  
 > Would recommend trying to disable auto-updating. 
 
 ## what is this
