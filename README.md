@@ -1,8 +1,7 @@
 # pikdum's steam deck tools
 
-> **Notice:** Recently swapped Vortex install method from STL to [pikdum/vortex-linux](https://github.com/pikdum/vortex-linux).  
-> This is a breaking change, so you'll need to uninstall + reinstall.  
-> It's also completely new, so there might be bugs.  
+> **Notice:** Looks to be broken after upgrading due to a recent Vortex release.
+> Would recommend trying to disable auto-updating. 
 
 ## what is this
 
