@@ -1,8 +1,5 @@
 # pikdum's steam deck tools
 
-> **Notice:** Looks to be broken after upgrading due to a recent Vortex release.  
-> Would recommend trying to disable auto-updating. 
-
 ## what is this
 
 a collection of steam deck tools and scripts to help automate some things, starting with installing vortex
