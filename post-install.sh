@@ -27,6 +27,8 @@ else
     chmod +x vortex-linux
     popd
 
+    ~/.pikdum/steam-deck-master/vortex/vortex-linux setupVortexDesktop
+
     if [ ! -d "$HOME/.vortex-linux/proton-builds/$PROTON_BUILD" ]; then
         echo "Upgrading Proton to $PROTON_BUILD..."
         ~/.pikdum/steam-deck-master/vortex/vortex-linux downloadProton "$PROTON_URL"
