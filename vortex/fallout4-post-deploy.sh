@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -euxo pipefail
 
 FALLOUT4_INTERNAL="$HOME/.steam/steam/steamapps/common/Fallout 4/"
