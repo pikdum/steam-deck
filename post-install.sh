@@ -16,7 +16,7 @@ else
     ln -sf ~/.pikdum/steam-deck-master/vortex/fallout3-post-deploy.desktop ~/Desktop/
     ln -sf ~/.pikdum/steam-deck-master/vortex/oblivion-post-deploy.desktop ~/Desktop/
 
-    VORTEX_LINUX="v1.3.3"
+    VORTEX_LINUX="v1.3.4"
     PROTON_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton8-13/GE-Proton8-13.tar.gz"
     PROTON_BUILD="GE-Proton8-13"
 
