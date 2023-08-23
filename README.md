@@ -9,6 +9,12 @@ a collection of steam deck tools and scripts to help automate some things, start
 1. right click and save as [this install.desktop link](https://raw.githubusercontent.com/pikdum/steam-deck/master/install.desktop)
 2. go to downloads folder and double click to run it
 
+or
+
+``` bash
+curl https://raw.githubusercontent.com/pikdum/steam-deck/master/install.sh | bash -s --
+```
+
 ## vortex
 
 after installing, you should have a shortcut on the desktop to install vortex
