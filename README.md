@@ -38,9 +38,6 @@ after modding, run games normally through game mode rather than launching throug
 
 ### download with vortex button link handler
 
-> **Notice:** Heard some people mention that this requires Nexus Premium.  
-> Could use some more people either confirming or denying this.  
-
 * might work out of the box, unless you've installed vortex before
 * if it doesn't work, edit these lines in ~~`~/.local/share/applications/mimeapps.list`~~ `~/.config/mimeapps.list`
 ```
