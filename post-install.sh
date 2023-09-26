@@ -17,8 +17,8 @@ else
     ln -sf ~/.pikdum/steam-deck-master/vortex/oblivion-post-deploy.desktop ~/Desktop/
 
     VORTEX_LINUX="v1.3.4"
-    PROTON_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton8-13/GE-Proton8-13.tar.gz"
-    PROTON_BUILD="GE-Proton8-13"
+    PROTON_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton8-16/GE-Proton8-16.tar.gz"
+    PROTON_BUILD="GE-Proton8-16"
 
     echo "Updating vortex-linux..."
     pushd ~/.pikdum/steam-deck-master/vortex/
@@ -30,6 +30,8 @@ else
     ~/.pikdum/steam-deck-master/vortex/vortex-linux setupVortexDesktop
 
     if [ ! -d "$HOME/.vortex-linux/proton-builds/$PROTON_BUILD" ]; then
+        echo "Removing old Proton builds..."
+        rm -rf $HOME/.vortex-linux/proton-builds/*
         echo "Upgrading Proton to $PROTON_BUILD..."
         ~/.pikdum/steam-deck-master/vortex/vortex-linux downloadProton "$PROTON_URL"
         ~/.pikdum/steam-deck-master/vortex/vortex-linux setProton "$PROTON_BUILD"
