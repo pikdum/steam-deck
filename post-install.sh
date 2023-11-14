@@ -17,8 +17,9 @@ else
     ln -sf ~/.pikdum/steam-deck-master/vortex/oblivion-post-deploy.desktop ~/Desktop/
 
     VORTEX_LINUX="v1.3.4"
-    PROTON_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton8-16/GE-Proton8-16.tar.gz"
-    PROTON_BUILD="GE-Proton8-16"
+    PROTON_BUILD="GE-Proton8-23"
+
+    PROTON_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$PROTON_BUILD/$PROTON_BUILD.tar.gz"
 
     echo "Updating vortex-linux..."
     pushd ~/.pikdum/steam-deck-master/vortex/
