@@ -7,7 +7,7 @@ a collection of steam deck tools and scripts to help automate some things, start
 ## install
 
 1. right click and save as [this install.desktop link](https://raw.githubusercontent.com/pikdum/steam-deck/master/install.desktop)
-2. go to downloads folder and double click to run it
+2. go to the downloads folder, move the `install.desktop` file to the desktop, and double click to run it
 
 or
 
@@ -36,11 +36,20 @@ after modding, run games normally through game mode rather than launching throug
 
 * will need to manually set the location, use either the J: or K: drives
   * J: is internal storage games, K: is sd card games
-* vortex will pop up some warnings about: staging location, deployment method
-   * walk through their fixes
-   * staging folder needs to be on the same drive as the game
-     * suggested path works here
-   * deployment method should be hardlinks
+* vortex may pop up some warnings about: staging location, deployment method
+   * if it does:
+      * walk through their fixes
+      * staging folder needs to be on the same drive as the game
+        * suggested path works here
+      * deployment method should be hardlinks
+   * if it doesn't:
+      * go to Settings -> Mods
+      * set the **Base Path** to:
+        * `K:\vortex_mods\{GAME}` if your games are on the sd card
+        * `J:\vortex_mods\{GAME}` if your games are on the internal drive
+      * press **Apply**
+      * **Deployment Method** will now allow you to select `Hardlink deployment`
+      * press **Apply** again
 
 ### download with vortex button link handler
 
