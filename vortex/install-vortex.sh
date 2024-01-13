@@ -2,8 +2,8 @@
 set -euxo pipefail
 
 VORTEX_LINUX="v1.3.4"
-VORTEX_VERSION="1.9.7"
-PROTON_BUILD="GE-Proton8-23"
+VORTEX_VERSION="1.9.12"
+PROTON_BUILD="GE-Proton8-27"
 
 PROTON_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$PROTON_BUILD/$PROTON_BUILD.tar.gz"
 VORTEX_INSTALLER="vortex-setup-$VORTEX_VERSION.exe"
