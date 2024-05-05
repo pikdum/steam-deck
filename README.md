@@ -4,6 +4,8 @@
 
 a collection of steam deck tools and scripts to help automate some things, starting with installing vortex
 
+hopefully temporary solution until https://github.com/Nexus-Mods/NexusMods.App is ready
+
 ## install
 
 1. right click and save as [this install.desktop link](https://raw.githubusercontent.com/pikdum/steam-deck/master/install.desktop)
