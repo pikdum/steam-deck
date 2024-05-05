@@ -29,6 +29,9 @@ mkdir -p "$APPDATA_INTERNAL" || true
 mkdir -p "$APPDATA_EXTERNAL" || true
 cp "$APPDATA_VORTEX"/* "$APPDATA_INTERNAL" || true
 cp "$APPDATA_VORTEX"/* "$APPDATA_EXTERNAL" || true
+# use Plugins.txt instead of plugins.txt
+mv "$APPDATA_INTERNAL/plugins.txt" "$APPDATA_INTERNAL/Plugins.txt" || true
+mv "$APPDATA_EXTERNAL/plugins.txt" "$APPDATA_EXTERNAL/Plugins.txt" || true
 
 echo "Success! Exiting in 3..."
 sleep 3
