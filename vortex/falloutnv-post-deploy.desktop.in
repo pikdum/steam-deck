@@ -1,7 +1,7 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
 Name=Fallout New Vegas Post-Deploy
-Exec=/home/deck/.pikdum/steam-deck-master/vortex/falloutnv-post-deploy.sh
+Exec=$HOME/.pikdum/steam-deck-master/vortex/falloutnv-post-deploy.sh
 Icon=steam_icon_22380
 Terminal=true
 Type=Application
