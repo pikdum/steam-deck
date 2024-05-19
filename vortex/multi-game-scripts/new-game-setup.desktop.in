@@ -1,0 +1,7 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=New Game One Time Setup
+Exec=$HOME/.pikdum/steam-deck-master/vortex/multi-game-scripts/new-game-setup.sh
+Terminal=true
+Type=Application
+StartupNotify=false
