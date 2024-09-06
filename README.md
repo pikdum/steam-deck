@@ -109,7 +109,7 @@ For Fallout 3:
 For Fallout NV:  
 * Once you have installed NVSE, rename "FalloutNVLauncher.exe" to "FalloutNVLauncher.exe.old"  
 * Then rename "nvse_loader.exe" to "FalloutNVLauncher.exe"  
-* Now pressing play on Steam will use SKSE.
+* Now pressing play on Steam will use NVSE.
 
 For Fallout 4:  
 * Once you have installed F4SE, rename "Fallout4Launcher.exe" to "Fallout4Launcher.exe.old"  
