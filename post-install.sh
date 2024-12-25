@@ -43,4 +43,6 @@ else
     fi
 fi
 
-mkdir -p /run/media/mmcblk0p1/vortex-downloads || true
+MOUNTPOINT="$(findmnt /dev/mmcblk0p1 -o TARGET -n)"
+
+mkdir -p $MOUNTPOINT/vortex-downloads || true
