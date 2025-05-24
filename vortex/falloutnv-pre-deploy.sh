@@ -4,8 +4,8 @@ set -euxo pipefail
 FALLOUTNV_INTERNAL="$HOME/.steam/steam/steamapps/common/Fallout New Vegas/"
 FALLOUTNV_EXTERNAL="/run/media/mmcblk0p1/steamapps/common/Fallout New Vegas/"
 
-DOCS_DEST="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/Documents/My Games/FalloutNV"
-APPDATA_DEST="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/FalloutNV"
+INIFILES_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/Documents/My Games/FalloutNV/"
+INIFILES_INTERNAL="$HOME/.local/share/Steam/steamapps/compatdata/22380/pfx/drive_c/users/steamuser/Documents/My Games/FalloutNV/"
 INIFILES_EXTERNAL="/run/media/mmcblk0p1/steamapps/compatdata/22380/pfx/drive_c/users/steamuser/Documents/My Games/FalloutNV/"
 
 if [ -d "$INIFILES_EXTERNAL" ]; then
