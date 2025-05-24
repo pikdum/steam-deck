@@ -17,32 +17,17 @@ else
     ln -sf ~/.pikdum/steam-deck-master/vortex/skyrimle-post-deploy.desktop ~/Desktop/
     ln -sf ~/.pikdum/steam-deck-master/vortex/fallout4-post-deploy.desktop ~/Desktop/
     ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-post-deploy.desktop ~/Desktop/
+    # The falloutnv-pre-deploy.desktop was missed in the original script, adding it for consistency if present
+    ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-pre-deploy.desktop ~/Desktop/
     ln -sf ~/.pikdum/steam-deck-master/vortex/fallout3-post-deploy.desktop ~/Desktop/
     ln -sf ~/.pikdum/steam-deck-master/vortex/oblivion-post-deploy.desktop ~/Desktop/
-
-    VORTEX_LINUX="v1.3.4"
-    PROTON_BUILD="GE-Proton9-23"
-
-    PROTON_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$PROTON_BUILD/$PROTON_BUILD.tar.gz"
-
-    echo "Updating vortex-linux..."
-    pushd ~/.pikdum/steam-deck-master/vortex/
-    rm -rf vortex-linux || true
-    wget https://github.com/pikdum/vortex-linux/releases/download/$VORTEX_LINUX/vortex-linux
-    chmod +x vortex-linux
-    popd
-
-    ~/.pikdum/steam-deck-master/vortex/vortex-linux setupVortexDesktop
-
-    if [ ! -d "$HOME/.vortex-linux/proton-builds/$PROTON_BUILD" ]; then
-        echo "Removing old Proton builds..."
-        rm -rf $HOME/.vortex-linux/proton-builds/*
-        echo "Upgrading Proton to $PROTON_BUILD..."
-        ~/.pikdum/steam-deck-master/vortex/vortex-linux downloadProton "$PROTON_URL"
-        ~/.pikdum/steam-deck-master/vortex/vortex-linux setProton "$PROTON_BUILD"
-    fi
+    # The main Vortex shortcut is now handled by install-vortex.sh, so no vortex-linux setupVortexDesktop needed
 fi
 
-MOUNTPOINT="$(findmnt /dev/mmcblk0p1 -o TARGET -n)"
-
-mkdir -p $MOUNTPOINT/vortex-downloads || true
+# Ensure Vortex downloads directory exists on SD card, if SD card is mounted and accessible
+# This was in the original script, and it's a reasonable thing to keep.
+# It's not strictly related to Vortex installation itself but general user convenience.
+MOUNTPOINT="$(findmnt /dev/mmcblk0p1 -o TARGET -n || true)" # Added || true to prevent script exit if not found
+if [ -n "$MOUNTPOINT" ] && [ -d "$MOUNTPOINT" ]; then
+    mkdir -p "$MOUNTPOINT/vortex-downloads" || true
+fi

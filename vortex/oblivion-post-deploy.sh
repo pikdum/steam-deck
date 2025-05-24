@@ -20,8 +20,8 @@ obse_setup() {
 obse_setup "$OBLIVION_INTERNAL"
 obse_setup "$OBLIVION_EXTERNAL"
 
-APPDATA_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Oblivion/"
-APPDATA_INTERNAL="$HOME/.local/share/Steam/steamapps/compatdata/22330/pfx/drive_c/users/steamuser/AppData/Local/Oblivion/"
+DOCS_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/Documents/My Games/Oblivion"
+APPDATA_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Oblivion"
 APPDATA_EXTERNAL="/run/media/mmcblk0p1/steamapps/compatdata/22330/pfx/drive_c/users/steamuser/AppData/Local/Oblivion/"
 
 echo "Copying loadorder.txt and plugins.txt"

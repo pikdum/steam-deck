@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-VORTEX_LINUX="v1.3.4"
+export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx/"
+mkdir -p "$WINEPREFIX"
+
+command -v umu-run >/dev/null || { echo "umu-run not found, please install it."; exit 1; }
+
 VORTEX_VERSION="1.13.7"
 PROTON_BUILD="GE-Proton9-23"
 
@@ -13,56 +17,64 @@ DOTNET_URL="https://download.visualstudio.microsoft.com/download/pr/06239090-ba0
 # install steam linux runtime sniper
 steam steam://install/1628350
 
-mkdir -p ~/.pikdum/steam-deck-master/vortex/
+# The script is expected to be run from ~/.pikdum/steam-deck-master/vortex/
+# as per install-vortex.desktop.in
+# So, ensure this directory exists and cd into it.
+TARGET_DIR="$HOME/.pikdum/steam-deck-master/vortex"
+mkdir -p "$TARGET_DIR"
+cd "$TARGET_DIR"
 
-cd ~/.pikdum/steam-deck-master/vortex/
+# Ensure vortex.sh is executable
+chmod +x ./vortex.sh
 
-rm -rf vortex-linux || true
-wget https://github.com/pikdum/vortex-linux/releases/download/$VORTEX_LINUX/vortex-linux
-chmod +x vortex-linux
+# Download Vortex Installer
+wget -O "$VORTEX_INSTALLER" "$VORTEX_URL"
 
-# set STEAM_RUNTIME_PATH to internal storage or sd card
-if [ -f "$HOME/.steam/steam/steamapps/common/SteamLinuxRuntime_sniper/run" ]; then
-    STEAM_RUNTIME_PATH="$HOME/.steam/steam/steamapps/common/SteamLinuxRuntime_sniper"
-elif [ -f "/run/media/mmcblk0p1/steamapps/common/SteamLinuxRuntime_sniper/run" ]; then
-    STEAM_RUNTIME_PATH="/run/media/mmcblk0p1/steamapps/common/SteamLinuxRuntime_sniper"
-else
-    echo "SteamLinuxRuntime Sniper not found!"
-    sleep 3
-    exit 1
-fi
+# Download .NET Installer
+wget -O "dotnet-installer.exe" "$DOTNET_URL"
 
-./vortex-linux setConfig STEAM_RUNTIME_PATH $STEAM_RUNTIME_PATH
-./vortex-linux downloadProton "$PROTON_URL"
-./vortex-linux setProton "$PROTON_BUILD"
-./vortex-linux downloadVortex "$VORTEX_URL"
-./vortex-linux protonRunUrl "$DOTNET_URL" /q
-./vortex-linux setupVortexDesktop
-./vortex-linux installVortex "$VORTEX_INSTALLER"
+# Install .NET Runtime
+umu-run "$(pwd)/dotnet-installer.exe" /q /norestart
 
-cd ~/.vortex-linux/compatdata/pfx/dosdevices
+# Install Vortex
+umu-run "$(pwd)/$VORTEX_INSTALLER" /S
+
+# Create dosdevices directory and symlinks
+mkdir -p "$WINEPREFIX/dosdevices"
+cd "$WINEPREFIX/dosdevices"
 
 if [ -d "$HOME/.steam/steam/steamapps/common/" ]; then
-    ln -s "$HOME/.steam/steam/steamapps/common/" j: || true
+    ln -sfn "$HOME/.steam/steam/steamapps/common/" j: || true
 fi
 
 if [ -d "/run/media/mmcblk0p1/steamapps/common/" ]; then
-    ln -s "/run/media/mmcblk0p1/steamapps/common/" k: || true
+    ln -sfn "/run/media/mmcblk0p1/steamapps/common/" k: || true
 fi
 
+# Change back to the script's directory for desktop file operations
+cd "$TARGET_DIR"
+
+# Copy the new .desktop file
+cp ./vortex.desktop "$HOME/.local/share/applications/vortex.desktop"
 update-desktop-database || true
 
+# Update desktop shortcut
 rm -f ~/Desktop/install-vortex.desktop
-ln -sf ~/.local/share/applications/vortex.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/skyrimle-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/fallout4-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-pre-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/fallout3-post-deploy.desktop ~/Desktop/
-ln -sf ~/.pikdum/steam-deck-master/vortex/oblivion-post-deploy.desktop ~/Desktop/
+ln -sf ~/.local/share/applications/vortex.desktop ~/Desktop/Vortex.desktop
 
-mkdir -p /run/media/mmcblk0p1/vortex-downloads || true
+# Remove old game-specific deploy desktop symlinks (if they existed)
+rm -f ~/Desktop/skyrim-post-deploy.desktop
+rm -f ~/Desktop/skyrimle-post-deploy.desktop
+rm -f ~/Desktop/fallout4-post-deploy.desktop
+rm -f ~/Desktop/falloutnv-post-deploy.desktop
+rm -f ~/Desktop/falloutnv-pre-deploy.desktop
+rm -f ~/Desktop/fallout3-post-deploy.desktop
+rm -f ~/Desktop/oblivion-post-deploy.desktop
+
+# Create Vortex downloads directory on SD card if it exists
+if [ -d "/run/media/mmcblk0p1/" ]; then
+    mkdir -p "/run/media/mmcblk0p1/vortex-downloads" || true
+fi
 
 echo "Success! Exiting in 3..."
 sleep 3

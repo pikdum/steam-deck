@@ -6,6 +6,12 @@ a collection of steam deck tools and scripts to help automate some things, start
 
 hopefully temporary solution until https://github.com/Nexus-Mods/NexusMods.App is ready
 
+## Important Notes
+
+- This project now uses `umu-launcher` (https://github.com/Open-Wine-Components/umu-launcher) to manage Vortex and its Wine/Proton environment.
+- You must have `umu-launcher` installed and available in your system's PATH for the scripts to work correctly.
+- The previous helper tool, `vortex-linux`, is no longer used.
+
 ## install
 
 1. right click and save as [this install.desktop link](https://raw.githubusercontent.com/pikdum/steam-deck/master/install.desktop)
@@ -19,51 +25,52 @@ curl https://raw.githubusercontent.com/pikdum/steam-deck/master/install.sh | bas
 
 ## vortex
 
-after installing, you should have a shortcut on the desktop to install vortex
+After installing, you should have a shortcut on the desktop to install Vortex. This installation is now managed by `umu-launcher`.
 
-this will:
+This process will:
 
-0. install SteamLinuxRuntime Sniper
-1. install pikdum/vortex-linux
-2. use ./vortex-linux to set up vortex
-3. add a 'Skyrim Post-Deploy' shortcut to desktop
-   * needs to be run every time after you change mods in Vortex
-   * also adds a 'Fallout 4 Post-Deploy'
-4. map J: to internal games and K: to sd card games
-   * E: is the sd card root
+0. Install SteamLinuxRuntime Sniper (as a dependency for some game setups, though Vortex itself runs via `umu-launcher`).
+1. Download and install Vortex into the `$HOME/.vortex-linux/compatdata/pfx/` WINEPREFIX using `umu-launcher`.
+2. Download and install the necessary .NET runtime into the same WINEPREFIX.
+3. Create a `Vortex.desktop` file and a desktop shortcut to launch Vortex via `vortex-umu.sh` (which uses `umu-launcher`).
+4. Add game-specific helper 'Post-Deploy' shortcuts to the desktop (e.g., 'Skyrim Post-Deploy').
+   * These may still be necessary for certain games that require file copying after mod deployment.
+5. Map J: to internal Steam library games and K: to SD card Steam library games within the Vortex WINEPREFIX.
+   * E: is often the SD card root in other contexts, but for Vortex drive mappings, J: and K: are standard for game library locations.
 
-after modding, run games normally through game mode rather than launching through vortex
+After modding, run games normally through Steam in Game Mode rather than launching them through Vortex.
 
 ### adding a game
 
-* will need to manually set the location, use either the J: or K: drives
-  * J: is internal storage games, K: is sd card games
-* vortex may pop up some warnings about: staging location, deployment method
-   * if it does:
-      * walk through their fixes
-      * staging folder needs to be on the same drive as the game
-        * suggested path works here
-      * deployment method should be hardlinks
-   * if it doesn't:
-      * go to Settings -> Mods
-      * set the **Base Path** to:
-        * `K:\vortex_mods\{GAME}` if your games are on the sd card
-        * `J:\vortex_mods\{GAME}` if your games are on the internal drive
-      * press **Apply**
-      * **Deployment Method** will now allow you to select `Hardlink deployment`
-      * press **Apply** again
+* Will need to manually set the game location within Vortex. Use either the J: or K: drives:
+  * J: points to `~/.steam/steam/steamapps/common/` (internal storage games).
+  * K: points to `/run/media/mmcblk0p1/steamapps/common/` (SD card games).
+* Vortex may show warnings about staging location or deployment method.
+   * If it does:
+      * Follow the recommended fixes.
+      * The staging folder must be on the same drive as the game.
+        * A suggested path like `J:\vortex_mods\{GAME}` or `K:\vortex_mods\{GAME}` should work.
+      * The deployment method should be "Hardlink deployment".
+   * If it doesn't automatically prompt or you need to change it:
+      * Go to Settings -> Mods.
+      * Set the **Mod Staging Folder** (previously Base Path) to a path like:
+        * `K:\vortex_mods\{GAME}` if your game is on the SD card (K: drive).
+        * `J:\vortex_mods\{GAME}` if your game is on the internal drive (J: drive).
+        * Ensure this directory is within the respective game drive (K: or J:).
+      * Press **Apply**.
+      * **Deployment Method** should now allow you to select `Hardlink deployment`.
+      * Press **Apply** again.
 
-### download with vortex button link handler
+### Download with Vortex button (NXM Link Handling)
 
-* might work out of the box, unless you've installed vortex before
-* if it doesn't work, edit these lines in ~~`~/.local/share/applications/mimeapps.list`~~ `~/.config/mimeapps.list`
+* This should work out of the box as the `vortex.desktop` file installed to `~/.local/share/applications/` includes the necessary `MimeType` entries for `x-scheme-handler/nxm`.
+* If it doesn't work, ensure your system's `mimeapps.list` (usually in `~/.config/mimeapps.list` or `~/.local/share/applications/mimeapps.list`) has lines like:
 ```
 x-scheme-handler/nxm=vortex.desktop
-x-scheme-handler/nxm-protocol=vortex.desktop
 ```
-* run `update-mime-database ~/.local/share/mime/`
-* might need to reboot
-* if still issues, make sure your browser is using the default app
+* You might need to run `update-desktop-database ~/.local/share/applications` and `update-mime-database ~/.local/share/mime/`.
+* A reboot or logging out and back in might be necessary.
+* If issues persist, verify that your web browser is configured to use the system's default application for NXM links.
 
 ### what are these post-deploy shortcuts?
 
@@ -83,21 +90,39 @@ a game's post-deploy script should be ran every time after modding in vortex
 
 ### adding symlink instead of running post-deploy shortcuts
 
-First navigate to ~/.vortex-linux/compatdata/pfx/drive_c/  
-Then open a second tab and navigate to  ~/.local/share/Steam/steamapps/compatdata/<game_id>/pfx/drive_c/
+This is an advanced alternative to using the post-deploy shortcuts. It involves symlinking the game's user data directory from the Vortex WINEPREFIX to the game's actual Proton WINEPREFIX.
 
-To find the ID of a game, go to the Steam store page. The numbers after "app" in the url are the ID.  
+First, navigate to the Vortex WINEPREFIX user data location: `$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/` (or `My Documents/My Games/` depending on the game).
+The exact path within Vortex's WINEPREFIX might vary based on the game (e.g., `My Documents/My Games/<GameName>`, or `AppData/Local/<GameName>`). You'll need to find where Vortex stores the game's modded configuration files (like `plugins.txt`).
 
-Example for Skyrim SE:  
-* URl: https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/  
-* game_id: 489830  
-* Path: ~/.local/share/Steam/steamapps/compatdata/489830/pfx/drive_c/
+Then open a second tab and navigate to the game's Proton WINEPREFIX, typically: `~/.local/share/Steam/steamapps/compatdata/<GAME_ID>/pfx/drive_c/users/steamuser/AppData/Local/` or `~/.local/share/Steam/steamapps/compatdata/<GAME_ID>/pfx/drive_c/users/steamuser/My Documents/My Games/`.
 
-Now take the "users" folder from the first location and move it to the second one.  
-Overwrite when asked, some settings could be overwritten and you should launch the game once before modding.
+To find the `<GAME_ID>`:
+1.  Open Steam.
+2.  Go to the game's page in your library.
+3.  Right-click the game, select "Properties..."
+4.  In the "Updates" tab, you'll often see "App ID" or look at the store page URL.
+    *   Example for Skyrim SE: URL is `https://store.steampowered.com/app/489830/...`, so `<GAME_ID>` is `489830`.
+    *   The compatdata path would be `~/.local/share/Steam/steamapps/compatdata/489830/pfx/drive_c/`.
 
-Now in the first location, right click and go to create new>link to file or directory.  
-Navigate back to ~/.local/share/Steam/steamapps/compatdata/<game_id>/pfx/drive_c/ and select the users folder.
+The goal is to replace the game-specific configuration directory (e.g., `Skyrim Special Edition`) in the game's actual Proton prefix with a symlink to the version in Vortex's prefix.
+
+**Example for Skyrim SE (AppData method):**
+1.  Locate Skyrim SE's configuration in Vortex's prefix: `$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition`.
+2.  Locate Skyrim SE's configuration in its Proton prefix: `~/.steam/steam/steamapps/compatdata/489830/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition`.
+3.  **Backup and remove** the original `Skyrim Special Edition` directory from the game's Proton prefix.
+4.  Create a symlink in the game's Proton prefix pointing to the Vortex one:
+    ```bash
+    cd ~/.steam/steam/steamapps/compatdata/489830/pfx/drive_c/users/steamuser/AppData/Local/
+    ln -s "$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Skyrim Special Edition" .
+    ```
+
+**Important Considerations for Symlinking:**
+*   This method requires careful path identification.
+*   Some games might store files in `My Documents/My Games/` instead of `AppData/Local/`. Adjust paths accordingly.
+*   **Always back up original directories before replacing them with symlinks.**
+*   If done correctly, changes in Vortex (like plugin order) should immediately reflect in the game without running post-deploy scripts.
+*   The old method of symlinking the entire `users` folder is too broad and can cause issues. Be specific to the game's configuration directory.
 
 Additional Steps:  
 
@@ -146,8 +171,13 @@ using Skyrim as an example:
 # remove these tools
 rm -rf ~/.pikdum/
 # remove vortex
+rm -rf "$HOME/.vortex-linux/compatdata/pfx/" # Corrected WINEPREFIX for umu-launcher setup
+rm -rf ~/.local/share/applications/vortex.desktop # Main desktop file
+rm -rf ~/.local/share/applications/vortex-umu.desktop # Old desktop file, if present
+rm -rf ~/.config/vortex-linux/ # Old vortex-linux config
+# remove vortex-linux data (no longer used, but good to clean up if present from old versions)
 rm -rf ~/.vortex-linux/
-rm -rf ~/.local/share/applications/vortex.*
+rm -rf ~/.local/share/applications/vortex.* # Catch-all for any other vortex related desktop files
 # manually remove desktop icons
 ```
 

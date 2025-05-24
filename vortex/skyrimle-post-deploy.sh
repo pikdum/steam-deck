@@ -20,8 +20,8 @@ skse_setup() {
 skse_setup "$SKYRIM_INTERNAL"
 skse_setup "$SKYRIM_EXTERNAL"
 
+DOCS_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/Documents/My Games/Skyrim"
 APPDATA_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Skyrim"
-APPDATA_INTERNAL="$HOME/.local/share/Steam/steamapps/compatdata/2028782/pfx/drive_c/users/steamuser/AppData/Local/Skyrim/"
 APPDATA_EXTERNAL="/run/media/mmcblk0p1/steamapps/compatdata/2028782/pfx/drive_c/users/steamuser/AppData/Local/Skyrim/"
 
 echo "Copying loadorder.txt and plugins.txt"

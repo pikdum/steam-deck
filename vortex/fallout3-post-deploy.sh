@@ -20,8 +20,8 @@ fose_setup() {
 fose_setup "$FALLOUT3_INTERNAL"
 fose_setup "$FALLOUT3_EXTERNAL"
 
-APPDATA_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/fallout3/"
-APPDATA_INTERNAL="$HOME/.local/share/Steam/steamapps/compatdata/22300/pfx/drive_c/users/steamuser/AppData/Local/fallout3/"
+DOCS_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/Documents/My Games/Fallout3"
+APPDATA_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/Fallout3"
 APPDATA_EXTERNAL="/run/media/mmcblk0p1/steamapps/compatdata/22300/pfx/drive_c/users/steamuser/AppData/Local/fallout3/"
 
 echo "Copying loadorder.txt and plugins.txt"

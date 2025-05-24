@@ -20,8 +20,8 @@ nvse_setup() {
 nvse_setup "$FALLOUTNV_INTERNAL"
 nvse_setup "$FALLOUTNV_EXTERNAL"
 
-APPDATA_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/FalloutNV/"
-APPDATA_INTERNAL="$HOME/.local/share/Steam/steamapps/compatdata/22380/pfx/drive_c/users/steamuser/AppData/Local/FalloutNV/"
+DOCS_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/Documents/My Games/FalloutNV"
+APPDATA_VORTEX="$HOME/.vortex-linux/compatdata/pfx/drive_c/users/steamuser/AppData/Local/FalloutNV"
 APPDATA_EXTERNAL="/run/media/mmcblk0p1/steamapps/compatdata/22380/pfx/drive_c/users/steamuser/AppData/Local/FalloutNV/"
 
 echo "Copying loadorder.txt and plugins.txt"
