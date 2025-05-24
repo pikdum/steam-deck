@@ -1,63 +1,7 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-# Check for umu-run via uv, if already setup by a previous run, skip installation
-if ! $HOME/.local/bin/umu-run -h &> /dev/null; then # Direct check first, uv run adds complexity for a simple check
-    echo "umu-launcher not found or not working, proceeding with installation..."
-
-    # Install uv (if not already installed)
-    if ! command -v uv &> /dev/null; then
-        echo "Installing uv..."
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        # Source uv environment (path might vary depending on shell and OS)
-        # Common locations for cargo/uv environment script
-        if [ -f "$HOME/.cargo/env" ]; then
-            source "$HOME/.cargo/env"
-        elif [ -f "$HOME/.profile" ]; then
-            source "$HOME/.profile" # May require relogin or new shell
-        elif [ -f "$HOME/.bashrc" ]; then
-            source "$HOME/.bashrc" # May require new shell
-        else
-            echo "Warning: Could not automatically source uv environment. Please ensure uv is in your PATH."
-        fi
-        # Verify uv is now available
-        if ! command -v uv &> /dev/null; then
-            echo "Failed to install or source uv. Please install uv manually and ensure it's in your PATH."
-            exit 1
-        fi
-    fi
-
-    UMU_VENV_DIR="$HOME/.local/share/umu-venv"
-    UMU_RUN_SCRIPT_PATH="$HOME/.local/bin/umu-run"
-    mkdir -p "$HOME/.local/bin"
-    mkdir -p "$(dirname "$UMU_VENV_DIR")" # Ensure .local/share exists
-
-    echo "Installing umu-launcher using uv..."
-    uv venv "$UMU_VENV_DIR"
-    # Use the uv binary from the venv to install into that venv
-    "$UMU_VENV_DIR/bin/uv" pip install "umu-launcher"
-
-    # Create the wrapper script $HOME/.local/bin/umu-run
-    cat << EOF > "$UMU_RUN_SCRIPT_PATH"
-#!/usr/bin/env sh
-exec "$UMU_VENV_DIR/bin/umu-run" "\$@"
-EOF
-    chmod +x "$UMU_RUN_SCRIPT_PATH"
-
-    # Verify installation
-    if ! "$UMU_RUN_SCRIPT_PATH" -h &> /dev/null; then
-        echo "Failed to install umu-launcher correctly."
-        exit 1
-    fi
-    echo "umu-launcher installed successfully."
-else
-    echo "umu-launcher already installed and configured."
-    UMU_RUN_SCRIPT_PATH="$HOME/.local/bin/umu-run" # Ensure it's defined
-fi
-
-export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx/"
-mkdir -p "$WINEPREFIX"
-
+VORTEX_LINUX="v1.3.4"
 VORTEX_VERSION="1.13.7"
 PROTON_BUILD="GE-Proton9-23"
 
@@ -69,64 +13,56 @@ DOTNET_URL="https://download.visualstudio.microsoft.com/download/pr/06239090-ba0
 # install steam linux runtime sniper
 steam steam://install/1628350
 
-# The script is expected to be run from ~/.pikdum/steam-deck-master/vortex/
-# as per install-vortex.desktop.in
-# So, ensure this directory exists and cd into it.
-TARGET_DIR="$HOME/.pikdum/steam-deck-master/vortex"
-mkdir -p "$TARGET_DIR"
-cd "$TARGET_DIR"
+mkdir -p ~/.pikdum/steam-deck-master/vortex/
 
-# Ensure vortex.sh is executable
-chmod +x ./vortex.sh
+cd ~/.pikdum/steam-deck-master/vortex/
 
-# Download Vortex Installer
-wget -O "$VORTEX_INSTALLER" "$VORTEX_URL"
+rm -rf vortex-linux || true
+wget https://github.com/pikdum/vortex-linux/releases/download/$VORTEX_LINUX/vortex-linux
+chmod +x vortex-linux
 
-# Download .NET Installer
-wget -O "dotnet-installer.exe" "$DOTNET_URL"
+# set STEAM_RUNTIME_PATH to internal storage or sd card
+if [ -f "$HOME/.steam/steam/steamapps/common/SteamLinuxRuntime_sniper/run" ]; then
+    STEAM_RUNTIME_PATH="$HOME/.steam/steam/steamapps/common/SteamLinuxRuntime_sniper"
+elif [ -f "/run/media/mmcblk0p1/steamapps/common/SteamLinuxRuntime_sniper/run" ]; then
+    STEAM_RUNTIME_PATH="/run/media/mmcblk0p1/steamapps/common/SteamLinuxRuntime_sniper"
+else
+    echo "SteamLinuxRuntime Sniper not found!"
+    sleep 3
+    exit 1
+fi
 
-# Install .NET Runtime
-"$UMU_RUN_SCRIPT_PATH" "$(pwd)/dotnet-installer.exe" /q /norestart
+./vortex-linux setConfig STEAM_RUNTIME_PATH $STEAM_RUNTIME_PATH
+./vortex-linux downloadProton "$PROTON_URL"
+./vortex-linux setProton "$PROTON_BUILD"
+./vortex-linux downloadVortex "$VORTEX_URL"
+./vortex-linux protonRunUrl "$DOTNET_URL" /q
+./vortex-linux setupVortexDesktop
+./vortex-linux installVortex "$VORTEX_INSTALLER"
 
-# Install Vortex
-"$UMU_RUN_SCRIPT_PATH" "$(pwd)/$VORTEX_INSTALLER" /S
-
-# Create dosdevices directory and symlinks
-mkdir -p "$WINEPREFIX/dosdevices"
-cd "$WINEPREFIX/dosdevices"
+cd ~/.vortex-linux/compatdata/pfx/dosdevices
 
 if [ -d "$HOME/.steam/steam/steamapps/common/" ]; then
-    ln -sfn "$HOME/.steam/steam/steamapps/common/" j: || true
+    ln -s "$HOME/.steam/steam/steamapps/common/" j: || true
 fi
 
 if [ -d "/run/media/mmcblk0p1/steamapps/common/" ]; then
-    ln -sfn "/run/media/mmcblk0p1/steamapps/common/" k: || true
+    ln -s "/run/media/mmcblk0p1/steamapps/common/" k: || true
 fi
 
-# Change back to the script's directory for desktop file operations
-cd "$TARGET_DIR"
-
-# Copy the new .desktop file
-cp ./vortex.desktop "$HOME/.local/share/applications/vortex.desktop"
 update-desktop-database || true
 
-# Update desktop shortcut
 rm -f ~/Desktop/install-vortex.desktop
-ln -sf ~/.local/share/applications/vortex.desktop ~/Desktop/Vortex.desktop
+ln -sf ~/.local/share/applications/vortex.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/skyrimle-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/fallout4-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/falloutnv-pre-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/fallout3-post-deploy.desktop ~/Desktop/
+ln -sf ~/.pikdum/steam-deck-master/vortex/oblivion-post-deploy.desktop ~/Desktop/
 
-# Remove old game-specific deploy desktop symlinks (if they existed)
-rm -f ~/Desktop/skyrim-post-deploy.desktop
-rm -f ~/Desktop/skyrimle-post-deploy.desktop
-rm -f ~/Desktop/fallout4-post-deploy.desktop
-rm -f ~/Desktop/falloutnv-post-deploy.desktop
-rm -f ~/Desktop/falloutnv-pre-deploy.desktop
-rm -f ~/Desktop/fallout3-post-deploy.desktop
-rm -f ~/Desktop/oblivion-post-deploy.desktop
-
-# Create Vortex downloads directory on SD card if it exists
-if [ -d "/run/media/mmcblk0p1/" ]; then
-    mkdir -p "/run/media/mmcblk0p1/vortex-downloads" || true
-fi
+mkdir -p /run/media/mmcblk0p1/vortex-downloads || true
 
 echo "Success! Exiting in 3..."
 sleep 3

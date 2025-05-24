@@ -19,27 +19,20 @@ curl https://raw.githubusercontent.com/pikdum/steam-deck/master/install.sh | bas
 
 ## vortex
 
-After installing, you should have a shortcut on the desktop named "Install Vortex". Running this script (`install-vortex.sh`) will set up Vortex Mod Manager.
+after installing, you should have a shortcut on the desktop to install vortex
 
-### Automatic `umu-launcher` Setup
+this will:
 
-The `install-vortex.sh` script now handles the automatic installation of `umu-launcher`, which is used to manage the Wine environment for Vortex. Here's how it works:
-1.  **`uv` Installation**: If `uv` (a Python packaging tool by Astral) is not detected on your system, the script will attempt to install it.
-2.  **`umu-launcher` Installation**: Using `uv`, the script will install `umu-launcher` into a local virtual environment located at `$HOME/.local/share/umu-venv`. A wrapper script for `umu-run` will be placed in `$HOME/.local/bin/umu-run`.
-This simplifies the setup process, as manual installation of these tools is no longer required.
+0. install SteamLinuxRuntime Sniper
+1. install pikdum/vortex-linux
+2. use ./vortex-linux to set up vortex
+3. add a 'Skyrim Post-Deploy' shortcut to desktop
+   * needs to be run every time after you change mods in Vortex
+   * also adds a 'Fallout 4 Post-Deploy'
+4. map J: to internal games and K: to sd card games
+   * E: is the sd card root
 
-### Vortex Installation Process
-
-The "Install Vortex" script will then proceed to:
-0.  Install SteamLinuxRuntime Sniper (if not already installed, often used by games).
-1.  Download and install Vortex into the `$HOME/.vortex-linux/compatdata/pfx/` WINEPREFIX using the automatically configured `umu-launcher`.
-2.  Download and install the necessary .NET runtime into the same WINEPREFIX.
-3.  Create a `Vortex.desktop` file and a desktop shortcut to launch Vortex.
-4.  Add game-specific helper 'Post-Deploy' shortcuts to the desktop (e.g., 'Skyrim Post-Deploy').
-    *   These may still be necessary for certain games that require file copying after mod deployment.
-5.  Map J: to internal Steam library games (`~/.steam/steam/steamapps/common/`) and K: to SD card Steam library games (`/run/media/mmcblk0p1/steamapps/common/`) within the Vortex WINEPREFIX.
-
-After modding, run games normally through Steam in Game Mode rather than launching them through Vortex.
+after modding, run games normally through game mode rather than launching through vortex
 
 ### adding a game
 
@@ -152,31 +145,10 @@ using Skyrim as an example:
 ```bash
 # remove these tools
 rm -rf ~/.pikdum/
-# remove umu-launcher and its venv
-rm -f "$HOME/.local/bin/umu-run"
-rm -rf "$HOME/.local/share/umu-venv"
-# remove Vortex WINEPREFIX and related files
-rm -rf "$HOME/.vortex-linux/compatdata/pfx/" # Main WINEPREFIX for Vortex
-rm -rf ~/.config/vortex-linux/ # Old vortex-linux config, if present
-rm -rf ~/.vortex-linux/ # Old vortex-linux data, if present
-# remove desktop files and application entries
-rm -f "$HOME/.local/share/applications/vortex.desktop"
-rm -f "$HOME/.local/share/applications/vortex-*.desktop" # Catch any other game specific ones if they existed
-rm -f "$HOME/Desktop/Vortex.desktop"
-rm -f "$HOME/Desktop/install-vortex.desktop"
-# Game specific deploy shortcuts on Desktop (remove if they exist)
-rm -f "$HOME/Desktop/skyrim-post-deploy.desktop"
-rm -f "$HOME/Desktop/skyrimle-post-deploy.desktop"
-rm -f "$HOME/Desktop/fallout4-post-deploy.desktop"
-rm -f "$HOME/Desktop/falloutnv-post-deploy.desktop"
-rm -f "$HOME/Desktop/falloutnv-pre-deploy.desktop"
-rm -f "$HOME/Desktop/fallout3-post-deploy.desktop"
-rm -f "$HOME/Desktop/oblivion-post-deploy.desktop"
-# Manually remove uv if desired (installed to $HOME/.cargo/bin/uv or $HOME/.local/bin/uv usually)
-echo "To fully uninstall uv, you may need to remove it manually from $HOME/.cargo/bin/ or $HOME/.local/bin/"
-# Update desktop database
-update-desktop-database ~/.local/share/applications || true
-echo "Uninstallation complete. Some icons might require manual removal or a desktop refresh."
+# remove vortex
+rm -rf ~/.vortex-linux/
+rm -rf ~/.local/share/applications/vortex.*
+# manually remove desktop icons
 ```
 
 ## old version uninstall
