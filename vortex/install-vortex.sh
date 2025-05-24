@@ -1,10 +1,62 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+# Check for umu-run via uv, if already setup by a previous run, skip installation
+if ! $HOME/.local/bin/umu-run -h &> /dev/null; then # Direct check first, uv run adds complexity for a simple check
+    echo "umu-launcher not found or not working, proceeding with installation..."
+
+    # Install uv (if not already installed)
+    if ! command -v uv &> /dev/null; then
+        echo "Installing uv..."
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        # Source uv environment (path might vary depending on shell and OS)
+        # Common locations for cargo/uv environment script
+        if [ -f "$HOME/.cargo/env" ]; then
+            source "$HOME/.cargo/env"
+        elif [ -f "$HOME/.profile" ]; then
+            source "$HOME/.profile" # May require relogin or new shell
+        elif [ -f "$HOME/.bashrc" ]; then
+            source "$HOME/.bashrc" # May require new shell
+        else
+            echo "Warning: Could not automatically source uv environment. Please ensure uv is in your PATH."
+        fi
+        # Verify uv is now available
+        if ! command -v uv &> /dev/null; then
+            echo "Failed to install or source uv. Please install uv manually and ensure it's in your PATH."
+            exit 1
+        fi
+    fi
+
+    UMU_VENV_DIR="$HOME/.local/share/umu-venv"
+    UMU_RUN_SCRIPT_PATH="$HOME/.local/bin/umu-run"
+    mkdir -p "$HOME/.local/bin"
+    mkdir -p "$(dirname "$UMU_VENV_DIR")" # Ensure .local/share exists
+
+    echo "Installing umu-launcher using uv..."
+    uv venv "$UMU_VENV_DIR"
+    # Use the uv binary from the venv to install into that venv
+    "$UMU_VENV_DIR/bin/uv" pip install "umu-launcher"
+
+    # Create the wrapper script $HOME/.local/bin/umu-run
+    cat << EOF > "$UMU_RUN_SCRIPT_PATH"
+#!/usr/bin/env sh
+exec "$UMU_VENV_DIR/bin/umu-run" "\$@"
+EOF
+    chmod +x "$UMU_RUN_SCRIPT_PATH"
+
+    # Verify installation
+    if ! "$UMU_RUN_SCRIPT_PATH" -h &> /dev/null; then
+        echo "Failed to install umu-launcher correctly."
+        exit 1
+    fi
+    echo "umu-launcher installed successfully."
+else
+    echo "umu-launcher already installed and configured."
+    UMU_RUN_SCRIPT_PATH="$HOME/.local/bin/umu-run" # Ensure it's defined
+fi
+
 export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx/"
 mkdir -p "$WINEPREFIX"
-
-command -v umu-run >/dev/null || { echo "umu-run not found, please install it."; exit 1; }
 
 VORTEX_VERSION="1.13.7"
 PROTON_BUILD="GE-Proton9-23"
@@ -34,10 +86,10 @@ wget -O "$VORTEX_INSTALLER" "$VORTEX_URL"
 wget -O "dotnet-installer.exe" "$DOTNET_URL"
 
 # Install .NET Runtime
-umu-run "$(pwd)/dotnet-installer.exe" /q /norestart
+"$UMU_RUN_SCRIPT_PATH" "$(pwd)/dotnet-installer.exe" /q /norestart
 
 # Install Vortex
-umu-run "$(pwd)/$VORTEX_INSTALLER" /S
+"$UMU_RUN_SCRIPT_PATH" "$(pwd)/$VORTEX_INSTALLER" /S
 
 # Create dosdevices directory and symlinks
 mkdir -p "$WINEPREFIX/dosdevices"

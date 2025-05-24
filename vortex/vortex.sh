@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+UMU_RUN_WRAPPER="$HOME/.local/bin/umu-run"
 export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx/"
 
 # Create the WINEPREFIX directory if it doesn't exist
@@ -22,10 +23,10 @@ fi
 # Check for -d or -i with no "nxm" in the following argument (for NXM link handling)
 if [[ ("$1" == "-d" || "$1" == "-i") && "$2" != *"nxm"* ]]; then
   echo "No url provided for $1, launching Vortex normally."
-  exec umu-run Vortex.exe
+  exec "$UMU_RUN_WRAPPER" Vortex.exe
 else
   # For NXM links or direct launch, PROTON_VERB might not be needed with umu-run
   # umu-run handles the execution context.
   # export PROTON_VERB="runinprefix" # This was in the user's example, but umu handles this.
-  exec umu-run Vortex.exe "$@"
+  exec "$UMU_RUN_WRAPPER" Vortex.exe "$@"
 fi
