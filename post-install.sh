@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-# Clean up old proton builds
+# Clean up data from old implementation
 rm -rf ~/.vortex-linux/proton-builds/
+rm -rf ~/.pikdum/steam-deck-master/vortex/vortex-linux
 
 echo "Templating files..."
 pushd ~/.pikdum/steam-deck-master/
