@@ -15,6 +15,9 @@ if [ ! -f "$HOME/.local/share/applications/vortex.desktop" ]; then
     echo "Creating Vortex install desktop shortcut..."
     ln -s ~/.pikdum/steam-deck-master/vortex/install-vortex.desktop ~/Desktop/install-vortex.desktop || true
 else
+    # update .desktop file to make sure it's up to date
+    cp ~/.pikdum/steam-deck-master/vortex/vortex.desktop ~/.local/share/applications/
+
     echo "Creating Vortex desktop shortcuts..."
     ln -sf ~/.local/share/applications/vortex.desktop ~/Desktop/
     ln -sf ~/.pikdum/steam-deck-master/vortex/skyrim-post-deploy.desktop ~/Desktop/
