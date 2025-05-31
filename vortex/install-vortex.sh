@@ -6,7 +6,7 @@ VORTEX_INSTALLER="vortex-setup-$VORTEX_VERSION.exe"
 VORTEX_URL="https://github.com/Nexus-Mods/Vortex/releases/download/v$VORTEX_VERSION/$VORTEX_INSTALLER"
 DOTNET_URL="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/6.0.36/windowsdesktop-runtime-6.0.36-win-x64.exe"
 
-export WINEPREFIX="$HOME/.vortex-linux/compatdata"
+export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx"
 
 mkdir -p ~/.pikdum/steam-deck-master/vortex/
 cd ~/.pikdum/steam-deck-master/vortex/

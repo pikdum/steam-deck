@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-export WINEPREFIX="$HOME/.vortex-linux/compatdata"
+export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx"
 
-cd "$HOME/.vortex-linux/compatdata/drive_c/Program Files/Black Tree Gaming Ltd/Vortex" || exit 1
+cd "$WINEPREFIX/drive_c/Program Files/Black Tree Gaming Ltd/Vortex" || exit 1
 
 # Check for -d or -i with no "nxm" in the following argument
 if [[ ("$1" == "-d" || "$1" == "-i") && "$2" != *"nxm"* ]]; then

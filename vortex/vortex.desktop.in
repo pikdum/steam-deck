@@ -5,6 +5,6 @@ Name=Vortex
 MimeType=x-scheme-handler/nxm;x-scheme-handler/nxm-protocol
 Terminal=false
 X-KeepTerminal=false
-Path=$HOME/.vortex-linux/compatdata/drive_c/Program Files/Black Tree Gaming Ltd/Vortex
+Path=$HOME/.vortex-linux/compatdata/pfx/drive_c/Program Files/Black Tree Gaming Ltd/Vortex
 Exec=$HOME/.pikdum/steam-deck-master/vortex/vortex-wrapper.sh -d %u
 Icon=$HOME/.pikdum/steam-deck-master/vortex/vortex.ico
