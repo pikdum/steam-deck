@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx"
+export WINEPREFIX=@winePrefix@
 
 mkdir -p "$WINEPREFIX"
 

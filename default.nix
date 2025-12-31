@@ -3,6 +3,8 @@
 }:
 let
   vortexVersion = "1.13.7";
+  homeDir = builtins.getEnv "HOME";
+  winePrefix = "${homeDir}/.vortex-linux/compatdata/pfx";
 
   vortexInstaller = builtins.fetchurl {
     url = "https://github.com/Nexus-Mods/Vortex/releases/download/v${vortexVersion}/vortex-setup-${vortexVersion}.exe";
@@ -18,21 +20,27 @@ let
     umuLauncher = "${pkgs.umu-launcher}";
     vortexInstaller = "${vortexInstaller}";
     dotnetInstaller = "${dotnetInstaller}";
+    winePrefix = "${winePrefix}";
   };
-
 
   preInstall = pkgs.writeShellScriptBin "vortex-install" ''
     exec ${installScript}
   '';
   
-  vortexWrapperScript = pkgs.replaceVars ./vortex-wrapper.sh {
-    umuLauncher = "${pkgs.umu-launcher}";
-  };
+  vortexWrapperScript = pkgs.writeShellScript "vortex-wrapper.sh" ''
+    #!/usr/bin/env bash
+    set -euo pipefail
+    
+    export WINEPREFIX="${winePrefix}"
+    
+    exec ${pkgs.steam-run}/bin/steam-run ${pkgs.umu-launcher}/bin/umu-run "$WINEPREFIX/drive_c/Program Files/Black Tree Gaming Ltd/Vortex/Vortex.exe" "$@"
+  '';
 
   installPhaseScript = pkgs.replaceVars ./install-phase.sh {
     vortexWrapperScript = "${vortexWrapperScript}";
     desktopItem = "${./vortex.desktop}";
     desktopItemIcon = "${./vortex.ico}";
+    homeDir = "${homeDir}";
   };
 
 in 
