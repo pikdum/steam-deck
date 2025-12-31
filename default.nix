@@ -1,55 +1,65 @@
-{ stdenvNoCC
-, fetchurl
-, writeShellScriptBin
-, umu-launcher
-, makeWrapper 
-, substituteAll
-, lib
+{ pkgs ? import <nixpkgs> {}
+, lib ? pkgs.lib
 }:
 let
   vortexVersion = "1.13.7";
 
-  vortexInstaller = fetchurl {
+  vortexInstaller = builtins.fetchurl {
     url = "https://github.com/Nexus-Mods/Vortex/releases/download/v${vortexVersion}/vortex-setup-${vortexVersion}.exe";
-    hash = lib.fakeSha256; # You'll need to update this
+    sha256 = "sha256:138i0ii5mnxh672nybr122cwwm6zqvinnifxqzjv84v13w35k61h";
   };
   
-  dotnetRuntime = fetchurl {
+  dotnetRuntime = builtins.fetchurl {
     url = "https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/6.0.36/windowsdesktop-runtime-6.0.36-win-x64.exe";
-    hash = lib.fakeSha256; # You'll need to update this
+    sha256 = "sha256:0hc9g5xi4wdqx09g1sqphnpn8qvab7adkyr59z42p2zw4sxxw80d";
+  };
+
+  postInstallScript = pkgs.replaceVars ./post-install.sh {
+    umuLauncher = "${pkgs.umu-launcher}";
+    vortexInstaller = "${vortexInstaller}";
+    dotnetRuntime = "${dotnetRuntime}";
   };
   
-  processedScript = substituteAll {
-    src = ./post-install.sh;
-    umuLauncher = umu-launcher;
-    vortexInstaller = vortexInstaller;
-    dotnetRuntime = dotnetRuntime;
-  };
-  
-  # Create the final executable
-  installScript = writeShellScriptBin "install-vortex" ''
-    exec ${processedScript}
+  postInstall = pkgs.writeShellScriptBin "post-install" ''
+    exec ${postInstallScript}
   '';
 
-in stdenvNoCC.mkDerivation {
+  vortexWrapperScript = pkgs.replaceVars ./vortex-wrapper.sh {
+    umuLauncher = "${pkgs.umu-launcher}";
+  };
+  
+  vortexWrapper = pkgs.writeShellScriptBin "vortex-wrapper" ''
+    exec ${vortexWrapperScript}
+  '';
+
+  installPhaseScript = pkgs.replaceVars ./install-phase.sh {
+    desktopItem = "${./vortex.desktop}";
+    desktopItemIcon = "${./vortex.ico}";
+    postInstall = "${postInstall}";
+    vortexWrapper = "${vortexWrapper}";
+  };
+
+in 
+pkgs.stdenvNoCC.mkDerivation {
   pname = "vortex-setup";
   version = vortexVersion;
   
-  nativeBuildInputs = [ makeWrapper ];
-  buildInputs = [ umu-launcher ];
+  nativeBuildInputs = [ pkgs.makeWrapper ];
+  buildInputs = [ pkgs.umu-launcher ];
   
   dontUnpack = true;
   dontBuild = true;
   
   installPhase = ''
-    mkdir -p $out/bin
-    cp ${installScript}/bin/install-vortex $out/bin/install-vortex
+    runHook preInstall
     
-    wrapProgram $out/bin/install-vortex \
-      --prefix PATH : ${stdenvNoCC.lib.makeBinPath [ umu-launcher ]}
+    # Execute the install script
+    bash ${installPhaseScript}
+    
+    runHook postInstall
   '';
   
-  meta = with stdenvNoCC.lib; {
+  meta = with lib; {
     description = "Vortex mod manager installer for Linux via umu-launcher";
     homepage = "https://github.com/Nexus-Mods/Vortex";
     license = licenses.unfree;
