@@ -9,34 +9,30 @@ let
     sha256 = "sha256:138i0ii5mnxh672nybr122cwwm6zqvinnifxqzjv84v13w35k61h";
   };
   
-  dotnetRuntime = builtins.fetchurl {
+  dotnetInstaller = builtins.fetchurl {
     url = "https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/6.0.36/windowsdesktop-runtime-6.0.36-win-x64.exe";
     sha256 = "sha256:0hc9g5xi4wdqx09g1sqphnpn8qvab7adkyr59z42p2zw4sxxw80d";
   };
 
-  postInstallScript = pkgs.replaceVars ./post-install.sh {
+  installScript = pkgs.replaceVars ./install.sh {
     umuLauncher = "${pkgs.umu-launcher}";
     vortexInstaller = "${vortexInstaller}";
-    dotnetRuntime = "${dotnetRuntime}";
+    dotnetInstaller = "${dotnetInstaller}";
   };
-  
-  postInstall = pkgs.writeShellScriptBin "post-install" ''
-    exec ${postInstallScript}
-  '';
 
+
+  preInstall = pkgs.writeShellScriptBin "vortex-install" ''
+    exec ${installScript}
+  '';
+  
   vortexWrapperScript = pkgs.replaceVars ./vortex-wrapper.sh {
     umuLauncher = "${pkgs.umu-launcher}";
   };
-  
-  vortexWrapper = pkgs.writeShellScriptBin "vortex-wrapper" ''
-    exec ${vortexWrapperScript}
-  '';
 
   installPhaseScript = pkgs.replaceVars ./install-phase.sh {
+    vortexWrapperScript = "${vortexWrapperScript}";
     desktopItem = "${./vortex.desktop}";
     desktopItemIcon = "${./vortex.ico}";
-    postInstall = "${postInstall}";
-    vortexWrapper = "${vortexWrapper}";
   };
 
 in 
@@ -55,8 +51,6 @@ pkgs.stdenvNoCC.mkDerivation {
     
     # Execute the install script
     bash ${installPhaseScript}
-    
-    runHook postInstall
   '';
   
   meta = with lib; {

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
 export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx"
 
-cd "$WINEPREFIX/drive_c/Program Files/Black Tree Gaming Ltd/Vortex" || exit 1
-
-exec @umuLauncher@/bin/umu-run Vortex.exe "$@"
+exec @umuLauncher@/bin/umu-run "$WINEPREFIX/drive_c/Program Files/Black Tree Gaming Ltd/Vortex/Vortex.exe" "$@"

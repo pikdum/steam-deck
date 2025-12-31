@@ -2,9 +2,9 @@
 Type=Application
 Categories=Game;Utility
 Name=Vortex
-Comment=Vortex Mod Manager
 MimeType=x-scheme-handler/nxm;x-scheme-handler/nxm-protocol
 Terminal=false
-Exec=vortex %u
-Icon=vortex
-StartupWMClass=Vortex.exe
+X-KeepTerminal=false
+Path=$HOME/.vortex-linux/compatdata/pfx/drive_c/Program Files/Black Tree Gaming Ltd/Vortex
+Exec=vortex-wrapper.sh -d %u
+Icon=vortex.ico
