@@ -14,7 +14,7 @@ let
     sha256 = "sha256:0hc9g5xi4wdqx09g1sqphnpn8qvab7adkyr59z42p2zw4sxxw80d";
   };
 
-  installScript = pkgs.replaceVars ./install.sh {
+  installScript = pkgs.replaceVars ./pre-install.sh {
     umuLauncher = "${pkgs.umu-launcher}";
     vortexInstaller = "${vortexInstaller}";
     dotnetInstaller = "${dotnetInstaller}";
