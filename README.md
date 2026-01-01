@@ -12,6 +12,7 @@ nix-build .
 ```
 
 ## TODO
+- [x] passing `nxm://` arguments to Vortex
 - [ ] `Vortex.desktop` file deployment
-- [ ] `nxm://` scheme handle (do not open new Vortex process every time)
+- [ ] do not open new Vortex process every time
 - [ ] game mods deployment
