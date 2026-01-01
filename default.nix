@@ -27,14 +27,10 @@ let
     exec ${installScript}
   '';
   
-  vortexWrapperScript = pkgs.writeShellScript "vortex-wrapper.sh" ''
-    #!/usr/bin/env bash
-    set -euo pipefail
-    
-    export WINEPREFIX="${winePrefix}"
-    
-    exec ${pkgs.umu-launcher}/bin/umu-run "$WINEPREFIX/drive_c/Program Files/Black Tree Gaming Ltd/Vortex/Vortex.exe" "$@"
-  '';
+  vortexWrapperScript = pkgs.replaceVars ./vortex-wrapper.sh {
+    winePrefix = winePrefix;
+    umuLauncher = "${pkgs.umu-launcher}";
+  };
 
   installPhaseScript = pkgs.replaceVars ./install-phase.sh {
     vortexWrapperScript = "${vortexWrapperScript}";
