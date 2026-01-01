@@ -33,7 +33,7 @@ let
     
     export WINEPREFIX="${winePrefix}"
     
-    exec ${pkgs.steam-run}/bin/steam-run ${pkgs.umu-launcher}/bin/umu-run "$WINEPREFIX/drive_c/Program Files/Black Tree Gaming Ltd/Vortex/Vortex.exe" "$@"
+    exec ${pkgs.umu-launcher}/bin/umu-run "$WINEPREFIX/drive_c/Program Files/Black Tree Gaming Ltd/Vortex/Vortex.exe" "$@"
   '';
 
   installPhaseScript = pkgs.replaceVars ./install-phase.sh {
