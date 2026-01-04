@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Install Vortex
-Exec=$HOME/.pikdum/steam-deck-master/vortex/install-vortex.sh
-Icon=$HOME/.pikdum/steam-deck-master/vortex/vortex.ico
-Terminal=true
-Type=Application
-StartupNotify=false

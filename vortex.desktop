@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Categories=Game;Utility
+Name=Vortex
+MimeType=x-scheme-handler/nxm;x-scheme-handler/nxm-protocol
+Terminal=false
+X-KeepTerminal=false
+Path=$home/.vortex-linux/compatdata/pfx/drive_c/Program Files/Black Tree Gaming Ltd/Vortex
+Exec=$out/share/applications/vortex-wrapper.sh -d %u
+Icon=$out/share/applications/vortex.ico

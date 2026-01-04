@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Fallout 4 Post-Deploy
-Exec=$HOME/.pikdum/steam-deck-master/vortex/fallout4-post-deploy.sh
-Icon=steam_icon_377160
-Terminal=true
-Type=Application
-StartupNotify=false
