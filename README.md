@@ -1,6 +1,6 @@
 # pikdum's steam deck tools
 
-> ⚠️ **Important:** After installing Vortex, you must manually disable auto-updates in Vortex settings and make sure it does **not** update to version **1.16+**.
+> **IMPORTANT:** After installing Vortex, you must manually disable auto-updates in Vortex settings and make sure it does **not** update to version **1.16+**.
 
 ## what is this
 
