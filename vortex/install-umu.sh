@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-UMU_VERSION="1.2.6"
+UMU_VERSION="1.3.0"
 UMU_URL="https://github.com/Open-Wine-Components/umu-launcher/releases/download/$UMU_VERSION/umu-launcher-$UMU_VERSION-zipapp.tar"
 UMU_DIR="$HOME/.pikdum/umu"
 

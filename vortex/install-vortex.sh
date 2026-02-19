@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-VORTEX_VERSION="1.13.7"
+VORTEX_VERSION="1.16.3"
 VORTEX_INSTALLER="vortex-setup-$VORTEX_VERSION.exe"
 VORTEX_URL="https://github.com/Nexus-Mods/Vortex/releases/download/v$VORTEX_VERSION/$VORTEX_INSTALLER"
-DOTNET_URL="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/6.0.36/windowsdesktop-runtime-6.0.36-win-x64.exe"
+DOTNET_URL="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/9.0.13/windowsdesktop-runtime-9.0.13-win-x64.exe"
 
 export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx"
 
