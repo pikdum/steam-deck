@@ -1,5 +1,7 @@
 # pikdum's steam deck tools
 
+> ⚠️ **Important:** After installing Vortex, you must manually disable auto-updates in Vortex settings and make sure it does **not** update to version **1.16+**.
+
 ## what is this
 
 a collection of steam deck tools and scripts to help automate some things, starting with installing vortex
