@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 export WINEPREFIX="$HOME/.vortex-linux/compatdata/pfx"
+export PROTONPATH="GE-Proton"
 
 cd "$WINEPREFIX/drive_c/Program Files/Black Tree Gaming Ltd/Vortex" || exit 1
 
